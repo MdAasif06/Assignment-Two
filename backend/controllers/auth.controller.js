@@ -20,7 +20,7 @@ export const register = async (req, res) => {
       role: "editor",
     });
 
-    // 🔐 CREATE TOKEN (IMPORTANT)
+    // CREATE TOKEN (IMPORTANT)
     const token = jwt.sign(
       { id: user._id, role: user.role },
       process.env.JWT_SECRET,

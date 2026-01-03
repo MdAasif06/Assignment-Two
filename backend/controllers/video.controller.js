@@ -15,7 +15,7 @@ export const uploadVideo = async (req, res) => {
       size: req.file.size,
     });
 
-    // 🔥 processing start
+    // processing start
     processVideo(video._id);
 
     res.status(201).json({

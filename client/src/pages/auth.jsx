@@ -12,7 +12,7 @@ const Auth = ({ onAuth }) => {
       if (isLogin) {
         await loginApi(email, password);
       } else {
-        await signupApi(name, email, password); // ✅ FIXED
+        await signupApi(name, email, password); //FIXED
       }
       onAuth();
     } catch (err) {

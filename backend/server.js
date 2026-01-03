@@ -13,32 +13,27 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-/* =======================
-   1️⃣ Database Connect
-======================= */
+// Database Connect
+
 connectDB();
 
-/* =======================
-   2️⃣ Middlewares
-======================= */
+// Middlewares
+
 app.use(cors());
 app.use(express.json());
 app.use("/uploads", express.static("uploads"));
 
-/* =======================
-   3️⃣ Routes
-======================= */
+// Routes
+
 app.use("/api/auth", authRoutes);
 app.use("/api/videos", videoRoutes);
 
-/* =======================
-   4️⃣ HTTP Server
-======================= */
+//HTTP Server
+
 const server = http.createServer(app);
 
-/* =======================
-   5️⃣ Socket.IO Setup
-======================= */
+// Socket.IO Setup
+
 const io = new Server(server, {
   cors: {
     origin: "*",
@@ -48,11 +43,10 @@ const io = new Server(server, {
 // global io (agar controllers me use karna ho)
 global.io = io;
 
-/* =======================
-   6️⃣ Socket Testing
-======================= */
+// Socket Testing
+
 io.on("connection", (socket) => {
-  console.log("✅ Socket client connected:", socket.id);
+  console.log("Socket client connected:", socket.id);
 
   // server → client
   socket.emit("hello-from-server", {
@@ -61,17 +55,16 @@ io.on("connection", (socket) => {
 
   // client → server
   socket.on("hello-from-client", (data) => {
-    console.log("📩 Message from client:", data);
+    console.log("Message from client:", data);
   });
 
   socket.on("disconnect", () => {
-    console.log("❌ Client disconnected:", socket.id);
+    console.log("Client disconnected:", socket.id);
   });
 });
 
-/* =======================
-   7️⃣ Start Server
-======================= */
+// Start Server
+
 server.listen(PORT, () => {
-  console.log(`🚀 Server running on port ${PORT}`);
+  console.log(`Server running on port ${PORT}`);
 });
