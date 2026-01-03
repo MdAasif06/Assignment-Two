@@ -5,16 +5,18 @@ const Auth = ({ onAuth }) => {
   const [isLogin, setIsLogin] = useState(true);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [name, setName] = useState("");
 
   const submitHandler = async () => {
     try {
       if (isLogin) {
         await loginApi(email, password);
       } else {
-        await signupApi(email, password);
+        await signupApi(name, email, password); // ✅ FIXED
       }
-      onAuth(); // ✅ auth success
-    } catch {
+      onAuth();
+    } catch (err) {
+      console.error(err);
       alert("Auth failed");
     }
   };
@@ -26,8 +28,18 @@ const Auth = ({ onAuth }) => {
           {isLogin ? "Login" : "Signup"}
         </h2>
 
+        {!isLogin && (
+          <input
+            className="w-full border p-2 mb-3"
+            placeholder="Name"
+            onChange={(e) => setName(e.target.value)}
+          />
+        )}
+
+        {/* EMAIL INPUT (WAS MISSING) */}
         <input
           className="w-full border p-2 mb-3"
+          type="email"
           placeholder="Email"
           onChange={(e) => setEmail(e.target.value)}
         />
@@ -50,9 +62,7 @@ const Auth = ({ onAuth }) => {
           className="text-center mt-4 text-sm cursor-pointer text-blue-600"
           onClick={() => setIsLogin(!isLogin)}
         >
-          {isLogin
-            ? "Create new account"
-            : "Already have an account?"}
+          {isLogin ? "Create new account" : "Already have an account?"}
         </p>
       </div>
     </div>

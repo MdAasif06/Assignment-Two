@@ -10,10 +10,12 @@ export const loginApi = async (email, password) => {
   localStorage.setItem("token", res.data.token);
 };
 
-export const signupApi = async (email, password) => {
+export const signupApi = async (name, email, password,role) => {
   const res = await axios.post(`${AUTH_URL}/register`, {
+    name,
     email,
     password,
+    role
   });
   localStorage.setItem("token", res.data.token);
 };
