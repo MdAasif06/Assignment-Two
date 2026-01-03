@@ -7,7 +7,7 @@ import { upload } from "../middlewares/upload.middleware.js";
 const router = express.Router();
 
 // Upload video (Editor/Admin only)
-router.post("/upload",protect,checkRole("editor", "admin"),upload.single("video"),uploadVideo);
+router.post("/upload",protect,checkRole("editor","admin"),upload.single("video"),uploadVideo);
 
 // Get logged-in user's videos
 router.get("/", protect, getMyVideos);

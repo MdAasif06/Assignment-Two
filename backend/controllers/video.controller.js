@@ -1,4 +1,5 @@
 import Video from "../models/video.model.js";
+import { processVideo } from "../utils/processing-video.js";
 
 export const uploadVideo = async (req, res) => {
   try {
@@ -14,8 +15,11 @@ export const uploadVideo = async (req, res) => {
       size: req.file.size,
     });
 
+    // 🔥 processing start
+    processVideo(video._id);
+
     res.status(201).json({
-      message: "Video uploaded successfully",
+      message: "Video uploaded & processing started",
       video,
     });
   } catch (err) {
@@ -34,3 +38,5 @@ export const getMyVideos = async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 };
+
+
